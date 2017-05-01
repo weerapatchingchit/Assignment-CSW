@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html ng-app="starter">
+
+<head>
+  <meta charset="utf-8">
+
+  <title></title>
+  <script src="/bower_components/angular/angular.js"></script>
+  <script src="/bower_components/angular-route/angular-route.js"></script>
+  <script src="/bower_components/angular-resource/angular-resource.js"></script>
+
+  <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="/bower_components/tether/dist/js/tether.min.js"></script>
+  <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</head>
+
+<body ng-controller="AppController">
+  <!-- <div class="">
+    <b> Result: </b>
+    <font color="red">{{result}} </font>
+  </div> -->
+  <div class="container">
+  <center>  <h1>Basketball Scoreboard</h1> </center>  <br/>
+<div style="padding:20px 0px 60px 0px">
+      <span class="col-md-1" style="font-weight:bold">Search</span>
+      <span class="col-md-3">
+      <input type="text" class="form-control" ng-model="search"/>
+      </span>
+    </div>
+
+  </div>
+  <div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>No.</th>
+            <th>Team</th>
+          <th>Play</th>
+          <th>Win</th>
+          
+          <th>lose</th>
+          <th>Point</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="basketball in basketballs |  filter:search | orderBy:'-win' track by $index" ng-if="!isEmpty(basketball)">
+          <td scope="row">{{ $index+1 }}</td>
+           <td>{{basketball.team}}</td>
+          <td>{{(basketball.win)+(basketball.lose)}}</td>
+          <td>{{basketball.win}}</td>
+          
+          <td>{{ basketball.lose}}</td>
+          <td>{{ (basketball.win)/((basketball.win)+(basketball.lose))}}</td>
+          <td>
+            <!-- <button type="button" ng-click="get(basketball.id)" class="btn btn-info">get</button> -->
+            <button type="button" ng-click="edit(basketball.id)" class="btn btn-success">edit</button>
+            <button type="button" ng-click="delete(basketball.id)" class="btn btn-danger">delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row">
+      <div class="col-6">
+        <h2>Add new basketball</h2>
+        <label for="basic-url">Team</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="basic-url" ng-model="addBasketball.team" ng-init="addBasketball.team=''">
+        </div>
+        <br><label for="basic-url">Win</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="basic-url" ng-model="addBasketball.win">
+        </div>
+        <br><label for="basic-url">Lose</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="basic-url" ng-model="addBasketball.lose">
+        </div>
+        <br>
+        <button class="btn btn-primary" ng-click="add()">Submit</button>
+        <br>
+      </div>
+      <div class="col-6">
+        <h2>Edit</h2>
+        <input type="hidden" id="id" ng-model="editBasketball.id">
+        <label for="basic-url">Team</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="basic-url" ng-model="editBasketball.team" ng-init="addBasketball.team=''">
+        </div>
+        <br><label for="basic-url">Win</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="basic-url" ng-model="editBasketball.win">
+        </div>
+        <br><label for="basic-url">Lose</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="basic-url" ng-model="editBasketball.lose">
+        </div>
+        <br>
+        <button class="btn btn-primary" ng-click="update(editBasketball.id)">Update</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- angular templating -->
+  <!-- this is where content will be injected -->
+  <!-- <div ng-view></div> -->
+  <!-- core script  app -->
+  <script src="js/appbas.js"></script>
+
+</body>
+
+</html>

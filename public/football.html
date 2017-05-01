@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html ng-app="starter">
+
+<head>
+  <meta charset="utf-8">
+
+  <title></title>
+  <script src="/bower_components/angular/angular.js"></script>
+  <script src="/bower_components/angular-route/angular-route.js"></script>
+  <script src="/bower_components/angular-resource/angular-resource.js"></script>
+
+  <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="/bower_components/tether/dist/js/tether.min.js"></script>
+  <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</head>
+
+<body ng-controller="AppController">
+  <!-- <div class="">
+    <b> Result: </b>
+    <font color="red">{{result}} </font>
+  </div> -->
+  <div class="container">
+  <center>  <h1>Football Scoreboard</h1> </center>  <br/>
+  <div style="padding:20px 0px 60px 0px">
+      <span class="col-md-1" style="font-weight:bold">Search</span>
+      <span class="col-md-3">
+      <input type="text" class="form-control" ng-model="search"/>
+      </span>
+    </div>
+
+  </div>
+  <div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Team</th>
+          <th>Play</th>
+          <th>Win</th>
+          <th>Drew</th>
+          <th>lose</th>
+          <th>Point</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="football in footballs |  filter:search | orderBy:'-win' track by $index" ng-if="!isEmpty(football)">
+          <td scope="row">{{ $index+1 }}</td>
+          <td>{{football.team}}</td>
+          <td>{{(football.win)+(football.drew)+(football.lose)}}</td>
+          <td>{{football.win}}</td>
+          <td>{{ football.drew}}</td>
+          <td>{{ football.lose}}</td>
+          <td>{{ (football.win * 3)+(football.drew * 1)+(football.lose * 0)}}</td>
+          <td>
+            <!-- <button type="button" ng-click="get(football.id)" class="btn btn-info">get</button> --> 
+            <button type="button" ng-click="edit(football.id)" class="btn btn-success">edit</button>
+            <button type="button" ng-click="delete(football.id)" class="btn btn-danger">delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row">
+      <div class="col-6">
+        <h2>Add new football</h2>
+        <label for="basic-url">Team</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="basic-url" ng-model="addFootball.team" ng-init="addFootball.team=''">
+        </div>
+      
+        <br><label for="basic-url">Win</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="basic-url" ng-model="addFootball.win">
+        </div>
+
+         <br><label for="basic-url">Drew</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="basic-url" ng-model="addFootball.drew">
+        </div>
+         <br><label for="basic-url">Lose</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="basic-url" ng-model="addFootball.lose">
+        </div>
+
+        <br>
+        <button class="btn btn-primary" ng-click="add()">Submit</button>
+        <br>
+      </div>
+      <div class="col-6">
+        <h2>Edit</h2>
+        <input type="hidden" id="id" ng-model="editFootball.id">
+        <label for="basic-url">Team</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="basic-url" ng-model="editFootball.team" ng-init="addFootball.team=''">
+        </div>
+        
+        <br><label for="basic-url">Win</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="basic-url" ng-model="editFootball.win">
+        </div>
+
+         <br><label for="basic-url">Drew</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="basic-url" ng-model="editFootball.drew">
+        </div>
+
+         <br><label for="basic-url">Lose</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="basic-url" ng-model="editFootball.lose">
+        </div>
+
+        
+        <br>
+        <button class="btn btn-primary" ng-click="update(editFootball.id)">Update</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- angular templating -->
+  <!-- this is where content will be injected -->
+  <!-- <div ng-view></div> -->
+  <!-- core script  app -->
+  <script src="js/appfoot.js"></script>
+
+</body>
+
+</html>
